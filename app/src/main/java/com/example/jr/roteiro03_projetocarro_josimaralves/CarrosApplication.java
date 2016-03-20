@@ -30,7 +30,6 @@ public class CarrosApplication extends Application {
         this.carros.add(new Carros(R.drawable.corvette, "Corvette"));
         this.carros.add(new Carros(R.drawable.gallardo, "Gallardo"));
         this.carros.add(new Carros(R.drawable.mustang, "Mustang"));
-
     }
 
     public List<Carros> getCarros() {
