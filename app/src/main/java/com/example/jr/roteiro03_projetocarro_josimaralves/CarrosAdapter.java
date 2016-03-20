@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -21,26 +22,12 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarrosView
     public CarrosAdapter(Context context) {
         this.context = context;
         application = (CarrosApplication) context.getApplicationContext();
-        carros = application.getCarros();
+        this.carros = application.getCarros();
     }
 
-    @Override
-    public CarrosAdapter.CarrosViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
-    }
 
     @Override
-    public void onBindViewHolder(CarrosAdapter.CarrosViewHolder holder, int position) {
-
-    }
-
-    @Override
-    public int getItemCount() {
-        return 0;
-    }
-
-    @Override
-    public CarrosViewHolder onCreateViewHolder(RecyclerView.ViewHolder viewGroup, int viewType) {// Inflo meu layout e armazeno ele em uma view
+    public CarrosAdapter.CarrosViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {// Inflo meu layout e armazeno ele em uma view
         View view = LayoutInflater.from(context).inflate(R.layout.content_list_main, viewGroup, false);
         // Envio meu layout inflado (view) para a classe ViewHolder
         return new CarrosViewHolder(view);
@@ -68,6 +55,16 @@ public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarrosView
             toqueView = itemView.findViewById(R.id.toque_list);
             imgView = (ImageView) itemView.findViewById(R.id.img_list_main);
             textView = (TextView) itemView.findViewById(R.id.text_list_main);
+
+            toqueView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getPosition();
+                    application.removerCarro(position);
+                    Toast.makeText(context, "Removeu da posição" + position, Toast.LENGTH_SHORT).show();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 }
