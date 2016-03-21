@@ -11,6 +11,7 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+    private CarrosAdapter adapter;
     private RecyclerView recyclerView;
     private CarrosApplication application;
 
@@ -21,17 +22,21 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        adapter = new CarrosAdapter(this);
+        application = (CarrosApplication) getApplicationContext();
+
         recyclerView = (RecyclerView) findViewById(R.id.recycleViewMain);
-        recyclerView.setAdapter(new CarrosAdapter(this));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setHasFixedSize(true);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 application.adicionarCarro();
+                adapter.notifyDataSetChanged();
             }
         });
     }

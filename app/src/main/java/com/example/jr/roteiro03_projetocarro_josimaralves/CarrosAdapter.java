@@ -11,60 +11,59 @@ import android.widget.Toast;
 
 import java.util.List;
 
-/**
- * Created by Jr on 20/03/2016.
- */
+
 public class CarrosAdapter extends RecyclerView.Adapter<CarrosAdapter.CarrosViewHolder> {
+
     private Context context;
     private List<Carros> carros;
     private CarrosApplication application;
 
     public CarrosAdapter(Context context) {
         this.context = context;
-        application = (CarrosApplication) context.getApplicationContext();
-        this.carros = application.getCarros();
+        application = (CarrosApplication)context.getApplicationContext();
+        carros = application.getCarros();
     }
-
-
     @Override
-    public CarrosAdapter.CarrosViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {// Inflo meu layout e armazeno ele em uma view
+    public CarrosViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.content_list_main, viewGroup, false);
-        // Envio meu layout inflado (view) para a classe ViewHolder
         return new CarrosViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(CarrosViewHolder holder, int position) {
-        Carros c = carros.get(position); // Capturo meu carro da posição// Mostro a imagem do meu carro
-        holder.imgView.setImageAlpha(c.getIdImagemCarro());// Exibo o nome do carro
+
+        Carros c = carros.get(position);
+        holder.imgView.setImageDrawable(context.getResources().getDrawable(c.getIdImagemCarro()));
         holder.textView.setText(c.getNomeCarro());
     }
 
     @Override
     public int getItemCount() {
-        return this.carros.size(); // Retorno o tamanho da lista de carros}
+        return this.carros.size();
     }
 
     public class CarrosViewHolder extends RecyclerView.ViewHolder {
+
         private View toqueView;
         private ImageView imgView;
         private TextView textView;
 
-        public CarrosViewHolder(View itemView) {
+        public CarrosViewHolder (View itemView) {
             super(itemView);
             toqueView = itemView.findViewById(R.id.toque_list);
-            imgView = (ImageView) itemView.findViewById(R.id.img_list_main);
-            textView = (TextView) itemView.findViewById(R.id.text_list_main);
+            imgView = (ImageView)itemView.findViewById(R.id.img_list_main);
+            textView = (TextView)itemView.findViewById(R.id.text_list_main);
 
             toqueView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     int position = getPosition();
                     application.removerCarro(position);
-                    Toast.makeText(context, "Removeu da posição" + position, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Removeu da posição " +position, Toast.LENGTH_SHORT).show();
                     notifyDataSetChanged();
                 }
             });
+
         }
     }
 }
