@@ -37,10 +37,14 @@ public class CarrosApplication extends Application {
     }
 
     public void adicionarCarro() {
-        Random random = new Random();
-        int posicao = random.nextInt(this.carros.size());
-        Carros carro = this.carros.get(posicao);
-        this.carros.add(carro);
+        if (this.carros.size() == 0) {
+            criarCarrosPadrao();
+        } else {
+            Random random = new Random();
+            int posicao = random.nextInt(this.carros.size());
+            Carros carro = this.carros.get(posicao);
+            this.carros.add(carro);
+        }
     }
 
     public void removerCarro(int posicao) {
